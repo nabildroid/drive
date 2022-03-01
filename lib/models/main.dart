@@ -1,3 +1,13 @@
+class User {
+  final String id;
+  final String name;
+  final String avatar;
+
+  final bool isPremuim;
+
+  User(this.id, this.name, this.avatar, this.isPremuim);
+}
+
 class Profile {
   final DateTime lastChange;
   final int size;
@@ -9,16 +19,16 @@ class Node {
   final String parent;
   final String name;
   final String id;
+  late final DateTime lastChange;
 
   Node(this.parent, this.name, this.id);
 }
 
 class Folder extends Node {
-  final DateTime lastChange;
-
   final List<Node> childs;
+  late final String Color;
 
-  Folder(this.lastChange, this.childs) : super('', '', '');
+  Folder(this.childs) : super('', '', '');
 }
 
 class File extends Node {
@@ -26,10 +36,8 @@ class File extends Node {
 
   final int size;
   final String hash;
-  final DateTime lastChange;
 
-  File(this.metadata, this.size, this.hash, this.lastChange)
-      : super('', '', '');
+  File(this.metadata, this.size, this.hash) : super('', '', '');
 }
 
 class Metadata {
