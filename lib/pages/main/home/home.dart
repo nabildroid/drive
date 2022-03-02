@@ -34,25 +34,6 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 50,
-        margin: const EdgeInsets.only(bottom: 12),
-        width: MediaQuery.of(context).size.width - 24,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(Icons.home),
-            Icon(Icons.home),
-            Icon(Icons.home),
-            Icon(Icons.home),
-          ],
-        ),
-        decoration: BoxDecoration(
-          color: Color(0xFFC4C4C4),
-          borderRadius: BorderRadius.circular(100),
-        ),
-      ),
     );
   }
 }

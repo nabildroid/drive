@@ -3,7 +3,8 @@ import 'package:drive/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'pages/home/home.dart';
+import 'pages/main/home/home.dart';
+import 'pages/main/main.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class AppNavigator extends StatelessWidget {
     final signIn = context.read<AuthCubit>().googleSignIn;
     return BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
       if (state.isAuth) {
-        return Home();
+        return Main();
       }
       return Scaffold(
         body: Center(
