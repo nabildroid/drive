@@ -1,0 +1,1 @@
+// todo a loose connection with Firebase Auth and the app
