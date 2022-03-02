@@ -9,7 +9,7 @@ class RecentFiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 90,
+      height: 120,
       child: ListView.builder(
         itemBuilder: (ctx, i) => Container(
             child: Container(

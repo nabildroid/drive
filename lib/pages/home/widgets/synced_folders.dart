@@ -9,7 +9,7 @@ class SyncedFolders extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 80,
+      height: 90,
       child: ListView.builder(
         itemBuilder: (ctx, i) => i == 0
             ? SizedBox(

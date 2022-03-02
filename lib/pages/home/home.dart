@@ -11,25 +11,28 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomAppBar(),
-              SizedBox(height: 12),
-              SectionLabel("RECENT"),
-              SizedBox(height: 8),
-              RecentFiles(),
-              SizedBox(height: 24),
-              SectionLabel("SYNCED FOLDERS"),
-              SizedBox(height: 8),
-              SyncedFolders(),
-            ],
-          ),
-          FolderTreeBottomSheet(),
-        ],
+      body: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppBar(),
+                SizedBox(height: 12),
+                SectionLabel("RECENT"),
+                SizedBox(height: 8),
+                RecentFiles(),
+                SizedBox(height: 24),
+                SectionLabel("SYNCED FOLDERS"),
+                SizedBox(height: 8),
+                SyncedFolders(),
+              ],
+            ),
+            FolderTreeBottomSheet(),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
