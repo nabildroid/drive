@@ -1,14 +1,16 @@
 import 'package:drive/models/main.dart';
 
 abstract class FilesRepository {
-  Future<Node> top() {
+  Future<List<Node>> top() {
     return fromPath("/");
   }
 
-  Future<Node> fromPath(String path);
+  Future<List<Node>> fromPath(String path);
 
   Future<void> move(Node source, Node destination);
-  Future<void> rename(Node node, name);
+  Future<void> rename(Node node, String name);
+
+  Future<Folder> createFolder(Folder folder);
 
   Future<void> delete(Node node);
 
