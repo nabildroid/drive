@@ -31,7 +31,13 @@ class Profile extends User {
   final DateTime lastChange;
   final int size;
 
-  Profile(this.lastChange, this.size) : super('', '', '');
+  // todo bloc direct creation
+  Profile(User user, this.lastChange, this.size)
+      : super(user.id, user.name, user.avatar);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [...super.props, lastChange, size];
 }
 
 class NodeHistory {
