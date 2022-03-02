@@ -1,17 +1,37 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+class User extends Equatable {
   final String id;
   final String name;
   final String avatar;
 
   User(this.id, this.name, this.avatar);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, name, avatar];
+}
+
+class AuthUser extends User {
+  final bool isPremuim;
+
+  AuthUser({
+    required String id,
+    required String name,
+    required String avatar,
+    required this.isPremuim,
+  }) : super(id, name, avatar);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, name, avatar, isPremuim];
 }
 
 class Profile extends User {
   final DateTime lastChange;
   final int size;
-  final bool isPremuim;
 
-  Profile(this.lastChange, this.size, this.isPremuim) : super('', '', '');
+  Profile(this.lastChange, this.size) : super('', '', '');
 }
 
 class NodeHistory {
@@ -75,6 +95,7 @@ class LocalFolder {
 }
 
 enum SyncFolderState { running, paused, waiting }
+enum OutSyncFolderState { none, local, remote }
 
 class SyncFolder {
   late final String id;
