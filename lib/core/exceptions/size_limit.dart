@@ -1,0 +1,1 @@
+class SizeLimitException implements Exception {}
