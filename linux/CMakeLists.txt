@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "drive")
-set(APPLICATION_ID "com.example.drive")
+set(APPLICATION_ID "com.laknabil.drive")
 
 cmake_policy(SET CMP0063 NEW)
 

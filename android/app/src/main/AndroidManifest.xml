@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.drive">
+    package="com.laknabil.drive">
    <application
         android:label="drive"
         android:name="${applicationName}"
