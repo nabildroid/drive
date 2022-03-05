@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final String imageUrl;
+  final int size;
+
   const CustomAppBar({
     Key? key,
+    required this.imageUrl,
+    required this.size,
   }) : super(key: key);
 
   @override
@@ -18,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage("https://github.com/nabildroid.png"),
+            backgroundImage: NetworkImage(imageUrl),
             radius: 16,
           ),
           Expanded(
@@ -39,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           Chip(
-            label: Text("35 GB"),
+            label: Text("$size GB"),
             labelStyle: TextStyle(fontSize: 12),
             backgroundColor: Colors.black38,
             padding: const EdgeInsets.all(2),

@@ -1,7 +1,11 @@
+import 'package:drive/models/main.dart';
 import 'package:flutter/material.dart';
 
 class FolderTreeBottomSheet extends StatelessWidget {
-  const FolderTreeBottomSheet({
+  final List<Node> items;
+
+  const FolderTreeBottomSheet(
+    this.items, {
     Key? key,
   }) : super(key: key);
 
@@ -29,12 +33,14 @@ class FolderTreeBottomSheet extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(bottom: 50),
-                itemCount: 6,
-                itemBuilder: (ctx, index) => ListTile(
+                itemCount: items.length,
+                itemBuilder: (ctx, i) => ListTile(
                   dense: true,
-                  leading: Icon(Icons.folder),
+                  leading: items[i] is Folder
+                      ? Icon(Icons.folder)
+                      : Icon(Icons.image),
                   title: Text(
-                    "Hello world!",
+                    items[i].name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       height: 2,
@@ -44,12 +50,12 @@ class FolderTreeBottomSheet extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.person,
+                        items[i].users.isEmpty ? Icons.lock : Icons.person,
                         size: 12,
                         color: Colors.black45,
                       ),
                       Text(
-                        "last edit: 22 mai 2020",
+                        items[i].history[0].lastEdit.toString(),
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 12,

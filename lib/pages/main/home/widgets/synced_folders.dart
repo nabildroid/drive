@@ -1,7 +1,10 @@
+import 'package:drive/models/main.dart';
 import 'package:flutter/material.dart';
 
 class SyncedFolders extends StatelessWidget {
-  const SyncedFolders({
+  final List<SyncFolder> syncedFoldes;
+  const SyncedFolders(
+    this.syncedFoldes, {
     Key? key,
   }) : super(key: key);
 
@@ -34,7 +37,7 @@ class SyncedFolders extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Screenshot",
+                      syncedFoldes[i].name,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
@@ -44,23 +47,31 @@ class SyncedFolders extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            "2h",
+                            "${syncedFoldes[i].period.inHours}h",
                             style: TextStyle(color: Colors.black54),
                           ),
                           Spacer(),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.pause),
-                            iconSize: 16,
-                            splashRadius: 16,
-                          )
+                          if (syncedFoldes[i].state == SyncFolderState.running)
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.pause),
+                              iconSize: 16,
+                              splashRadius: 16,
+                            ),
+                          if (syncedFoldes[i].state != SyncFolderState.running)
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.run_circle),
+                              iconSize: 16,
+                              splashRadius: 16,
+                            ),
                         ],
                       ),
                     )
                   ],
                 ),
               )),
-        itemCount: 40,
+        itemCount: syncedFoldes.length,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(left: 12),
       ),

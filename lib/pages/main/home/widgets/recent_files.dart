@@ -1,9 +1,9 @@
+import 'package:drive/models/main.dart';
 import 'package:flutter/material.dart';
 
 class RecentFiles extends StatelessWidget {
-  const RecentFiles({
-    Key? key,
-  }) : super(key: key);
+  final List<File> files;
+  const RecentFiles(this.files, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class RecentFiles extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "/home/../test",
+                files[i].parent,
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 12,
@@ -33,7 +33,7 @@ class RecentFiles extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                "File Name",
+                files[i].name,
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                 ),
@@ -56,7 +56,7 @@ class RecentFiles extends StatelessWidget {
             ],
           ),
         )),
-        itemCount: 40,
+        itemCount: files.length,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(left: 12),
       ),
