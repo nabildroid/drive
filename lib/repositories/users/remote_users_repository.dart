@@ -11,14 +11,20 @@ class RemoteUsersRepository extends UserRepository {
   }
 
   @override
-  Stream<Profile> getProfile(String id) {
-    return Firestore.users()
-        .doc(id)
-        .snapshots()
-        .where((event) => event.exists)
-        .map((event) {
-      return event.data()!;
-    });
+  Stream<Profile> getProfile(String id) async* {
+    yield Profile(
+      User("sdsds", "dsdsd", "https://github.com"),
+      DateTime.now(),
+      15,
+    );
+
+    // return Firestore.users()
+    //     .doc(id)
+    //     .snapshots()
+    //     .where((event) => event.exists)
+    //     .map((event) {
+    //   return event.data()!;
+    // });
   }
 
   @override

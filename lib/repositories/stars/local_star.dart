@@ -2,7 +2,7 @@ import 'package:drive/models/main.dart';
 
 import 'stars_repository.dart';
 
-class LocalStarRepositoryFactory extends StarsRepository {
+class LocalStarRepository extends StarsRepository {
   @override
   Future<List<Node>> get() {
     // TODO: implement get

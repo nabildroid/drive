@@ -5,8 +5,8 @@ import 'remote_star.dart';
 import 'stars_repository.dart';
 
 class StarRepositoryFactory extends StarsRepository {
-  final LocalStarRepositoryFactory _local;
-  final RemoteStarRepositoryFactory _remote;
+  final LocalStarRepository _local;
+  final RemoteStarRepository _remote;
 
   StarRepositoryFactory(this._local, this._remote);
   @override
