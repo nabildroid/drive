@@ -1,27 +1,53 @@
+import 'package:drive/cubits/auth_cubit.dart';
+import 'package:drive/cubits/app_cubit.dart';
+import 'package:drive/pages/main/files/files.dart';
+import 'package:drive/pages/main/stars/stars.dart';
+import 'package:drive/pages/main/syncing/syncing.dart';
+import 'package:drive/repositories/files/files_repository.dart';
+import 'package:drive/repositories/synced_folders/synced_folder_repository.dart';
+import 'package:drive/repositories/users/users_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home/home.dart';
 
 class Main extends StatelessWidget {
   Main({Key? key}) : super(key: key);
   final _key = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Navigator(
-        key: _key,
-        initialRoute: "/",
-        onGenerateRoute: (route) {
-          print(route);
-          if (route.name == "/") {
-            return MaterialPageRoute(builder: (_) => Home());
-          }
-          return MaterialPageRoute(builder: (_) => Scaffold());
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: CustomBottomNavigationBar(_key),
-    );
+    return BlocProvider(
+        create: (ctx) => AppCubit(
+              ctx.read<AuthState>().user!,
+              ctx.read<UserRepository>(),
+              ctx.read<SyncedFolderRepository>(),
+              ctx.read<FilesRepository>(),
+            ),
+        child: Scaffold(
+          body: Navigator(
+            key: _key,
+            initialRoute: "/home",
+            onGenerateRoute: (route) {
+              if (route.name == "/files") {
+                return MaterialPageRoute(builder: (_) => FilePage());
+              }
+
+              if (route.name == "/stars") {
+                return MaterialPageRoute(builder: (_) => StarsPage());
+              }
+
+              if (route.name == "/syncing") {
+                return MaterialPageRoute(builder: (_) => SyncingPage());
+              }
+
+              return MaterialPageRoute(builder: (_) => Home());
+            },
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: CustomBottomNavigationBar(_key),
+        ));
   }
 }
 
