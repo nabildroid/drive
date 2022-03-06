@@ -10,9 +10,9 @@ class RemoteUsersRepository extends UserRepository {
   @override
   Stream<Profile> getProfile(String id) async* {
     yield Profile(
-      User("sdsds", "dsdsd", "https://github.com"),
+      User("sdsds", "dsdsd", "https://github.com/nabildroid.png"),
       DateTime.now(),
-      15,
+      22,
     );
   }
 

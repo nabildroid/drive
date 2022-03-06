@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = context.read<AppState>();
+    final appState = BlocProvider.of<AppCubit>(context).state;
     final profile = appState.profile!;
     final recentFiles = appState.recentFiles;
     final rootNodes = appState.rootNodes;
