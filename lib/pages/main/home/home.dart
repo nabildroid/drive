@@ -1,4 +1,6 @@
+import 'package:drive/cubits/app_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/custom_appbar.dart';
 import 'widgets/folder_tree_bottom_sheet.dart';
@@ -10,6 +12,12 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.read<AppState>();
+    final profile = appState.profile!;
+    final recentFiles = appState.recentFiles;
+    final rootNodes = appState.rootNodes;
+    final syncedFolders = appState.syncedFoldes;
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -19,18 +27,17 @@ class Home extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(),
-                SizedBox(height: 12),
-                SectionLabel("RECENT"),
-                SizedBox(height: 8),
-                RecentFiles(),
-                SizedBox(height: 24),
-                SectionLabel("SYNCED FOLDERS"),
-                SizedBox(height: 8),
-                SyncedFolders(),
+                CustomAppBar(
+                  imageUrl: profile.avatar,
+                  size: profile.size,
+                ),
+                SectionLabel("RECENT", 12, 8),
+                RecentFiles(recentFiles),
+                SectionLabel("SYNCED FOLDERS", 24, 8),
+                SyncedFolders(syncedFolders),
               ],
             ),
-            FolderTreeBottomSheet(),
+            FolderTreeBottomSheet(rootNodes),
           ],
         ),
       ),
@@ -40,15 +47,19 @@ class Home extends StatelessWidget {
 
 class SectionLabel extends StatelessWidget {
   final String label;
+  final double top;
+  final double bottom;
   const SectionLabel(
-    this.label, {
+    this.label,
+    this.top,
+    this.bottom, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12),
+      padding: EdgeInsets.only(left: 12, top: top, bottom: bottom),
       child: Text(
         this.label,
         style: TextStyle(
