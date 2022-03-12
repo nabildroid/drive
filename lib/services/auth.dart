@@ -1,4 +1,5 @@
 import 'package:drive/models/main.dart' hide User;
+import 'package:drive/models/users_model.dart';
 
 class AuthService {
   void whenAuthChange(void Function({AuthUser? user}) onChange) {

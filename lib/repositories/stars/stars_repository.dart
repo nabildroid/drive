@@ -1,3 +1,4 @@
+import 'package:drive/models/files_model.dart';
 import 'package:drive/models/main.dart';
 
 abstract class StarsRepository {
