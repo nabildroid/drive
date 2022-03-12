@@ -4,6 +4,8 @@ import 'package:drive/cubits/files_cubit.dart';
 import 'package:drive/cubits/stars_cubit.dart';
 import 'package:drive/cubits/syncing_cubit.dart';
 import 'package:drive/pages/main/files/files.dart';
+import 'package:drive/pages/main/stars/stars.dart';
+import 'package:drive/pages/main/syncing/syncing.dart';
 import 'package:drive/repositories/files/files_repository.dart';
 import 'package:drive/repositories/stars/stars_repository.dart';
 import 'package:drive/repositories/synced_folders/synced_folder_repository.dart';
@@ -37,9 +39,9 @@ class MainApp extends StatelessWidget {
         value: appCubit,
         child: BlocBuilder<AppCubit, AppState>(
             bloc: appCubit,
-            buildWhen: (a, b) => a.profile != b.profile,
+            buildWhen: (a, b) => a.loading != b.loading,
             builder: (context, state) {
-              if (state.profile == null) {
+              if (state.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -50,10 +52,12 @@ class MainApp extends StatelessWidget {
                   initialRoute: "/home",
                   onGenerateRoute: (route) {
                     if (route.name == "/files") {
+                      final arguments = route.arguments as FilesPageArguments;
+
                       return MaterialPageRoute(
                         builder: (_) => BlocProvider(
                           create: (_) => FilesCubit(appCubit, filesRepo),
-                          child: const FilePage(),
+                          child: FilePage(arguments.firstPath!),
                         ),
                       );
                     }
@@ -62,7 +66,7 @@ class MainApp extends StatelessWidget {
                       return MaterialPageRoute(
                         builder: (_) => BlocProvider(
                           create: (_) => StarsCubit(appCubit, starsRepo),
-                          child: const FilePage(),
+                          child: const StarsPage(),
                         ),
                       );
                     }
@@ -71,7 +75,7 @@ class MainApp extends StatelessWidget {
                       return MaterialPageRoute(
                         builder: (_) => BlocProvider(
                           create: (_) => SyncingCubit(appCubit, syncedRepo),
-                          child: const FilePage(),
+                          child: const SyncingPage(),
                         ),
                       );
                     }
