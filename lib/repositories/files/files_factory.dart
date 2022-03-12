@@ -17,7 +17,7 @@ class FilesRepositoyFactory extends FilesRepository {
   }
 
   @override
-  Future<List<Node>> fromPath(String path) {
+  Future<Folder> fromPath(String path) {
     //todo check for connectivity and the Data Syncing and select repo
     return _local.fromPath(path);
   }

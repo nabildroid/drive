@@ -8,32 +8,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppState extends Equatable {
   final Profile? profile;
 
-  final List<Node> rootNodes;
+  final Folder? rootFolder;
   final List<File> recentFiles;
   final List<SyncFolder> syncedFoldes;
 
+  bool get loading => profile == null || rootFolder == null;
+
   const AppState._({
     required this.profile,
-    required this.rootNodes,
+    required this.rootFolder,
     required this.recentFiles,
     required this.syncedFoldes,
   });
 
   const AppState.init()
       : profile = null,
-        rootNodes = const [],
+        rootFolder = null,
         recentFiles = const [],
         syncedFoldes = const [];
 
   AppState copyWith({
     Profile? profile,
-    List<Node>? rootNodes,
+    Folder? rootFolder,
     List<File>? recentFiles,
     List<SyncFolder>? syncedFoldes,
   }) {
     return AppState._(
       profile: profile ?? this.profile,
-      rootNodes: rootNodes ?? this.rootNodes,
+      rootFolder: rootFolder ?? this.rootFolder,
       recentFiles: recentFiles ?? this.recentFiles,
       syncedFoldes: syncedFoldes ?? this.syncedFoldes,
     );
@@ -55,9 +57,15 @@ class AppCubit extends Cubit<AppState> {
     this._filesRepository,
   ) : super(const AppState.init()) {
     _repository.getProfile(user.id).listen(
-          (value) => emit(
-            state.copyWith(profile: value),
-          ),
+          (value) => emit(state.copyWith(profile: value)),
+        );
+
+    _filesRepository.top().then((value) => emit(
+          state.copyWith(rootFolder: value),
+        ));
+
+    _syncedFolderRepository.get().then(
+          (value) => emit(state.copyWith(syncedFoldes: value)),
         );
   }
 }

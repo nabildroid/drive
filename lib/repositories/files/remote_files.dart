@@ -9,7 +9,7 @@ class RemoteFilesRepository extends FilesRepository {
   }
 
   @override
-  Future<List<Node>> fromPath(String path) {
+  Future<Folder> fromPath(String path) {
     // TODO: implement fromPath
     throw UnimplementedError();
   }

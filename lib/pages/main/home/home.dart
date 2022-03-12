@@ -1,4 +1,6 @@
 import 'package:drive/cubits/app_cubit.dart';
+import 'package:drive/models/main.dart';
+import 'package:drive/pages/main/files/files.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +17,7 @@ class Home extends StatelessWidget {
     final appState = BlocProvider.of<AppCubit>(context).state;
     final profile = appState.profile!;
     final recentFiles = appState.recentFiles;
-    final rootNodes = appState.rootNodes;
+    final rootFolder = appState.rootFolder;
     final syncedFolders = appState.syncedFoldes;
 
     return Scaffold(
@@ -37,7 +39,18 @@ class Home extends StatelessWidget {
                 SyncedFolders(syncedFolders),
               ],
             ),
-            FolderTreeBottomSheet(rootNodes),
+            if (rootFolder == null) Center(child: CircularProgressIndicator()),
+            if (rootFolder != null)
+              FolderTreeBottomSheet(
+                rootFolder,
+                expandable: true,
+                onExpanded: () => FilePage.route(context, rootFolder),
+                onClick: (item) {
+                  if (item is Folder) {
+                    FilePage.route(context, item);
+                  }
+                },
+              ),
           ],
         ),
       ),

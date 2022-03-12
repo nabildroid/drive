@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:drive/models/main.dart';
 
 import 'files_repository.dart';
@@ -10,9 +12,15 @@ class LocalFilesRepository extends FilesRepository {
   }
 
   @override
-  Future<List<Node>> fromPath(String path) {
-    // TODO: implement fromPath
-    throw UnimplementedError();
+  Future<Folder> fromPath(String path) async {
+    return Folder([
+      File(Metadata("png"), 15, "dsdsd"),
+      File(Metadata("png"), 15, "zdze"),
+      Folder([
+        File(Metadata("png"), Random().nextInt(100), "dsdsd"),
+        File(Metadata("png"), 15, "zdze"),
+      ])
+    ]);
   }
 
   @override
