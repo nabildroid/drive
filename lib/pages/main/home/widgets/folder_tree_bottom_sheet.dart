@@ -23,7 +23,14 @@ class FolderTreeBottomSheet extends StatefulWidget {
 }
 
 class _FolderTreeBottomSheetState extends State<FolderTreeBottomSheet> {
-  double factor = .5;
+  late double factor;
+
+  @override
+  void initState() {
+    factor = widget.expandable ? .5 : 1;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
