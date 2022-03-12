@@ -1,4 +1,5 @@
 import 'package:drive/models/main.dart';
+import 'package:drive/models/syncing_model.dart';
 import 'package:flutter/material.dart';
 
 class SyncedFolders extends StatelessWidget {

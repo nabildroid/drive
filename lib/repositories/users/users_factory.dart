@@ -1,4 +1,5 @@
 import 'package:drive/models/main.dart';
+import 'package:drive/models/users_model.dart';
 import 'package:drive/repositories/users/users_repository.dart';
 
 import 'local_users_repository.dart';

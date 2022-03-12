@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:drive/cubits/app_cubit.dart';
-import 'package:drive/models/main.dart';
+import 'package:drive/models/files_model.dart';
 import 'package:drive/repositories/files/files_repository.dart';
 import 'package:equatable/equatable.dart';
 

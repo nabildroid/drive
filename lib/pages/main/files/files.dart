@@ -1,6 +1,6 @@
 import 'package:drive/cubits/app_cubit.dart';
 import 'package:drive/cubits/files_cubit.dart';
-import 'package:drive/models/main.dart';
+import 'package:drive/models/files_model.dart';
 import 'package:drive/pages/main/home/widgets/custom_appbar.dart';
 import 'package:drive/pages/main/home/widgets/folder_tree_bottom_sheet.dart';
 import 'package:flutter/material.dart';

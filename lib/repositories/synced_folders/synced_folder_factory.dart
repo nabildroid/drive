@@ -1,4 +1,5 @@
 import 'package:drive/models/main.dart';
+import 'package:drive/models/syncing_model.dart';
 import 'package:drive/repositories/synced_folders/local_synced_folder.dart';
 import 'package:drive/repositories/synced_folders/remote_synced_folder.dart';
 import 'package:drive/repositories/synced_folders/synced_folder_repository.dart';

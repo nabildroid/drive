@@ -1,4 +1,6 @@
-import 'package:drive/models/main.dart';
+import 'package:drive/models/files_model.dart';
+import 'package:drive/models/syncing_model.dart';
+import 'package:drive/models/users_model.dart';
 import 'package:drive/repositories/files/files_repository.dart';
 import 'package:drive/repositories/synced_folders/synced_folder_repository.dart';
 import 'package:drive/repositories/users/users_repository.dart';

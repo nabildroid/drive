@@ -1,8 +1,7 @@
+import 'package:drive/models/users_model.dart';
 import 'package:drive/services/auth.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../models/main.dart';
 
 class AuthState extends Equatable {
   final AuthUser? user;

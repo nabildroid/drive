@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'package:drive/models/main.dart';
-import 'package:drive/pages/main/files/files.dart';
+import 'package:drive/models/files_model.dart';
 import 'package:flutter/material.dart';
 
 class FolderTreeBottomSheet extends StatefulWidget {

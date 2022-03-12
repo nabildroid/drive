@@ -1,4 +1,5 @@
 import 'package:drive/models/main.dart';
+import 'package:drive/models/syncing_model.dart';
 
 abstract class SyncedFolderRepository {
   Future<List<SyncFolder>> get();
