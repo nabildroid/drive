@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
@@ -40,40 +42,59 @@ class Profile extends User {
   List<Object?> get props => [...super.props, lastChange, size];
 }
 
-class NodeHistory {
+class NodeHistory extends Equatable {
   final User editedBy;
   final DateTime lastEdit;
   final DateTime created;
   final User createdBy;
 
   NodeHistory(this.editedBy, this.lastEdit, this.created, this.createdBy);
+
+  NodeHistory.init()
+      : editedBy = User("dsdsd", "sdsdd", "https://github.com/nabildroid.png"),
+        created = DateTime.now(),
+        lastEdit = DateTime.now(),
+        createdBy = User("dsdsd", "sdsdd", "https://github.com/nabildroid.png");
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [editedBy, lastEdit, created, createdBy];
 }
 
-class Node {
+class Node extends Equatable {
   final String parent;
   final String name;
   final String id;
-  late final List<NodeHistory> history;
+  final List<NodeHistory> history = [NodeHistory.init()];
 
-  late final List<String> users;
+  final List<String> users = [];
 
   bool get isPrivate {
     return users.isEmpty;
   }
 
   Node(this.parent, this.name, this.id);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [parent, name, id, ...history];
 }
 
 class LinkedNode extends Node {
-  late final String origin;
+  final String origin = "dsdd";
   LinkedNode(String parent, String name, String id) : super(parent, name, id);
+
+  List<Object?> get props => [...super.props, origin];
 }
 
 class Folder extends Node {
   final List<Node> childs;
-  late final String Color;
+  final String Color = "ddzdzd";
 
-  Folder(this.childs) : super('', '', '');
+  Folder(this.childs)
+      : super('', 'Folder' + Random().nextInt(100).toString(), '');
+
+  List<Object?> get props => [...super.props, ...childs, Color];
 }
 
 class File extends Node {
@@ -82,35 +103,38 @@ class File extends Node {
   final int size;
   final String hash;
 
-  File(this.metadata, this.size, this.hash) : super('', '', '');
+  File(this.metadata, this.size, this.hash) : super('', 'File', '');
+  List<Object?> get props => [...super.props, metadata, size, hash];
 }
 
-class Metadata {
+class Metadata extends Equatable {
   final String mimic;
 
   Metadata(this.mimic);
+
+  List<Object?> get props => [mimic];
 }
 
 class ImageMetaData extends Metadata {
-  late final String thumbnail;
+  final String thumbnail = "sdsdsd";
   ImageMetaData(String mimic) : super("image/png");
 }
 
 class LocalFolder {
-  late final String path;
+  final String path = "sdsdsd";
 }
 
 enum SyncFolderState { running, paused, waiting }
 enum OutSyncFolderState { none, local, remote }
 
 class SyncFolder {
-  late final String id;
-  late final String name;
+  final String id = "sdsdsd";
+  final String name = "sdsdsd";
   final Folder remote;
   final LocalFolder local;
 
-  late final Duration period;
-  late final SyncFolderState state;
+  final Duration period = Duration(hours: 2);
+  final SyncFolderState state = SyncFolderState.running;
 
   SyncFolder(this.remote, this.local);
 }

@@ -15,8 +15,10 @@ class LocalSyncedFolderRepository extends SyncedFolderRepository {
   }
 
   @override
-  Future<List<SyncFolder>> get() {
+  Future<List<SyncFolder>> get() async {
     // TODO: implement get
+
+    return List.generate(10, (index) => SyncFolder(Folder([]), LocalFolder()));
     throw UnimplementedError();
   }
 

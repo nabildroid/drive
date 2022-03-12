@@ -1,19 +1,43 @@
+import 'dart:math';
+
 import 'package:drive/models/main.dart';
+import 'package:drive/pages/main/files/files.dart';
 import 'package:flutter/material.dart';
 
-class FolderTreeBottomSheet extends StatelessWidget {
-  final List<Node> items;
+class FolderTreeBottomSheet extends StatefulWidget {
+  final Folder folder;
+  final bool expandable;
+  final Function(Node node)? onClick;
+  final Function()? onExpanded;
 
   const FolderTreeBottomSheet(
-    this.items, {
+    this.folder, {
     Key? key,
+    this.expandable = false,
+    this.onClick,
+    this.onExpanded,
   }) : super(key: key);
 
   @override
+  State<FolderTreeBottomSheet> createState() => _FolderTreeBottomSheetState();
+}
+
+class _FolderTreeBottomSheetState extends State<FolderTreeBottomSheet> {
+  late double factor;
+
+  @override
+  void initState() {
+    factor = widget.expandable ? .5 : 1;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final childs = widget.folder.childs;
     return FractionallySizedBox(
       alignment: Alignment.bottomCenter,
-      heightFactor: .5,
+      heightFactor: factor,
       child: Container(
         width: double.infinity,
         height: double.infinity,
@@ -21,26 +45,51 @@ class FolderTreeBottomSheet extends StatelessWidget {
           color: Colors.black12,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8).copyWith(top: 0),
         child: Column(
           children: [
-            Container(
-              width: 100,
-              height: 3,
-              color: Colors.black87,
+            GestureDetector(
+              onVerticalDragUpdate: ((details) {
+                if (widget.expandable) {
+                  setState(() {
+                    factor += details.delta.dy;
+                    factor = max(1, min(1, factor));
+                    if (factor == 1) {
+                      if (widget.onExpanded != null) {
+                        widget.onExpanded!();
+                      }
+                    }
+                  });
+                }
+              }),
+              child: Container(
+                width: double.infinity,
+                height: 30,
+                color: Colors.transparent,
+                child: Align(
+                  alignment: Alignment(0, -.5),
+                  child: Container(
+                    width: 180,
+                    height: 3,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
             ),
-            SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(bottom: 50),
-                itemCount: items.length,
+                itemCount: childs.length,
                 itemBuilder: (ctx, i) => ListTile(
+                  onTap: widget.onClick != null
+                      ? () => widget.onClick!(childs[i])
+                      : null,
                   dense: true,
-                  leading: items[i] is Folder
+                  leading: childs[i] is Folder
                       ? Icon(Icons.folder)
                       : Icon(Icons.image),
                   title: Text(
-                    items[i].name,
+                    childs[i].name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       height: 2,
@@ -50,12 +99,12 @@ class FolderTreeBottomSheet extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        items[i].users.isEmpty ? Icons.lock : Icons.person,
+                        childs[i].users.isEmpty ? Icons.lock : Icons.person,
                         size: 12,
                         color: Colors.black45,
                       ),
                       Text(
-                        items[i].history[0].lastEdit.toString(),
+                        childs[i].history[0].lastEdit.toString(),
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 12,
