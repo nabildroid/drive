@@ -1,7 +1,6 @@
 import 'package:drive/cubits/app_cubit.dart';
 import 'package:drive/cubits/files_cubit.dart';
 import 'package:drive/models/main.dart';
-import 'package:drive/pages/main/home/home.dart';
 import 'package:drive/pages/main/home/widgets/custom_appbar.dart';
 import 'package:drive/pages/main/home/widgets/folder_tree_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,6 @@ class _FilePageState extends State<FilePage> {
     final profile = appState.profile!;
 
     final _cubit = BlocProvider.of<FilesCubit>(context);
-    final _state = _cubit.state;
 
     return Scaffold(
       body: Column(children: [
@@ -54,81 +52,67 @@ class _FilePageState extends State<FilePage> {
           size: profile.size,
         ),
         SizedBox(height: 4),
-        Column(
-          children: [
-            Text(
-              _state.parent.name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-            Row(
-              children: [
-                ...List.generate(
-                  _state.parent.users.length,
-                  (index) => const Padding(
-                    padding: EdgeInsets.only(left: 4),
-                    child: CircleAvatar(
-                      maxRadius: 14,
-                      backgroundImage:
-                          NetworkImage("https://github.com/nabildroid.png"),
+        BlocBuilder<FilesCubit, FilesState>(
+            bloc: _cubit,
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Text(
+                    state.parent.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
-                ),
-                Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("add"),
-                )
-              ],
-            ),
-          ],
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-        ),
+                  Row(
+                    children: [
+                      ...List.generate(
+                        state.parent.users.length,
+                        (index) => const Padding(
+                          padding: EdgeInsets.only(left: 4),
+                          child: CircleAvatar(
+                            maxRadius: 14,
+                            backgroundImage: NetworkImage(
+                                "https://github.com/nabildroid.png"),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text("add"),
+                      )
+                    ],
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+              );
+            }),
         SizedBox(height: 10),
         Expanded(
           child: Container(
             width: double.infinity,
+            height: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.black,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            child: Column(
-              children: [
-                Container(
-                  height: 25,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Container(
-                      width: 180,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                    ),
-                  ),
-                ),
-                BlocBuilder<FilesCubit, FilesState>(
-                    bloc: _cubit,
-                    builder: (ctx, state) {
-                      if (state.parentFolder == null) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+            child: BlocBuilder<FilesCubit, FilesState>(
+                bloc: _cubit,
+                builder: (ctx, state) {
+                  if (state.parentFolder == null) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-                      return FolderTreeBottomSheet(
-                        state.parentFolder!,
-                        onClick: (item) {
-                          if (item is Folder) {
-                            _cubit.setParent(item);
-                          }
-                        },
-                      );
-                    })
-              ],
-            ),
+                  return FolderTreeBottomSheet(
+                    state.parentFolder!,
+                    onClick: (item) {
+                      if (item is Folder) {
+                        _cubit.setParent(item);
+                      }
+                    },
+                  );
+                }),
           ),
         )
       ]),

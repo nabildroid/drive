@@ -33,15 +33,15 @@ class FilesState extends Equatable {
   }
 
   FilesState setFolder(Folder parent) {
-    if (parent.id != _parent.id) {
-      return FilesState._(
-        parent,
-        isLoading: isLoading,
-        parentFolder: parentFolder,
-      );
-    } else {
-      return this;
-    }
+    // if (parent.id != _parent.id) {
+    return FilesState._(
+      parent,
+      isLoading: isLoading,
+      parentFolder: parentFolder,
+    );
+    // } else {
+    //   return this;
+    // }
   }
 
   @override
@@ -53,9 +53,9 @@ class FilesCubit extends Cubit<FilesState> {
   final FilesRepository _repo;
 
   FilesCubit(this._app, this._repo)
-      : super(
-          FilesState.init(_app.state.rootFolder!),
-        );
+      : super(FilesState.init(_app.state.rootFolder!)) {
+    parentChange();
+  }
 
   void setParent(Folder parent) {
     print("setting the parent");
@@ -66,12 +66,16 @@ class FilesCubit extends Cubit<FilesState> {
   void onChange(Change<FilesState> change) async {
     print("change");
     if (change.currentState.parent != change.nextState.parent) {
-      emit(state.copyWith(isLoading: true));
-
-      final folder = await _repo.fromPath(state.parent.id);
-
-      emit(state.copyWith(isLoading: false, parentFolder: folder));
+      await parentChange();
     }
     super.onChange(change);
+  }
+
+  Future<void> parentChange() async {
+    emit(state.copyWith(isLoading: true));
+
+    final folder = await _repo.fromPath(state.parent.id);
+
+    emit(state.copyWith(isLoading: false, parentFolder: folder));
   }
 }
