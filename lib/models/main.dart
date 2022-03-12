@@ -47,15 +47,21 @@ class NodeHistory {
   final User createdBy;
 
   NodeHistory(this.editedBy, this.lastEdit, this.created, this.createdBy);
+
+  NodeHistory.init()
+      : editedBy = User("dsdsd", "sdsdd", "https://github.com/nabildroid.png"),
+        created = DateTime.now(),
+        lastEdit = DateTime.now(),
+        createdBy = User("dsdsd", "sdsdd", "https://github.com/nabildroid.png");
 }
 
 class Node {
   final String parent;
   final String name;
   final String id;
-  late final List<NodeHistory> history;
+  final List<NodeHistory> history = [NodeHistory.init()];
 
-  late final List<String> users;
+  final List<String> users = [];
 
   bool get isPrivate {
     return users.isEmpty;
@@ -65,15 +71,15 @@ class Node {
 }
 
 class LinkedNode extends Node {
-  late final String origin;
+  final String origin = "dsdd";
   LinkedNode(String parent, String name, String id) : super(parent, name, id);
 }
 
 class Folder extends Node {
   final List<Node> childs;
-  late final String Color;
+  final String Color = "ddzdzd";
 
-  Folder(this.childs) : super('', '', '');
+  Folder(this.childs) : super('', 'Folder', '');
 }
 
 class File extends Node {
@@ -82,7 +88,7 @@ class File extends Node {
   final int size;
   final String hash;
 
-  File(this.metadata, this.size, this.hash) : super('', '', '');
+  File(this.metadata, this.size, this.hash) : super('', 'File', '');
 }
 
 class Metadata {
@@ -92,25 +98,25 @@ class Metadata {
 }
 
 class ImageMetaData extends Metadata {
-  late final String thumbnail;
+  final String thumbnail = "sdsdsd";
   ImageMetaData(String mimic) : super("image/png");
 }
 
 class LocalFolder {
-  late final String path;
+  final String path = "sdsdsd";
 }
 
 enum SyncFolderState { running, paused, waiting }
 enum OutSyncFolderState { none, local, remote }
 
 class SyncFolder {
-  late final String id;
-  late final String name;
+  final String id = "sdsdsd";
+  final String name = "sdsdsd";
   final Folder remote;
   final LocalFolder local;
 
-  late final Duration period;
-  late final SyncFolderState state;
+  final Duration period = Duration(hours: 2);
+  final SyncFolderState state = SyncFolderState.running;
 
   SyncFolder(this.remote, this.local);
 }
