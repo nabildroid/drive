@@ -27,7 +27,7 @@ class Node extends Equatable {
   final String id;
   final List<NodeHistory> history;
 
-  final List<String> users = [];
+  final List<User> users;
 
   bool get isPrivate {
     return users.isEmpty;
@@ -38,10 +38,11 @@ class Node extends Equatable {
     required this.name,
     required this.id,
     required this.history,
+    required this.users,
   });
 
   @override
-  List<Object?> get props => [parent, name, id, ...history];
+  List<Object?> get props => [parent, name, id, ...history, ...users];
 }
 
 class LinkedNode extends Node {
@@ -52,6 +53,7 @@ class LinkedNode extends Node {
           name: node.name,
           history: node.history,
           parent: node.parent,
+          users: node.users,
         );
 
   @override
@@ -71,6 +73,7 @@ class Folder extends Node {
           name: node.name,
           history: node.history,
           parent: node.parent,
+          users: node.users,
         );
 
   @override
@@ -93,6 +96,7 @@ class File extends Node {
           name: node.name,
           history: node.history,
           parent: node.parent,
+          users: node.users,
         );
   @override
   List<Object?> get props => [...super.props, metadata, size, hash];
