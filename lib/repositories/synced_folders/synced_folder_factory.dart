@@ -1,3 +1,4 @@
+import 'package:drive/data/data.dart';
 import 'package:drive/models/main.dart';
 import 'package:drive/models/syncing_model.dart';
 import 'package:drive/repositories/synced_folders/local_synced_folder.dart';
@@ -25,6 +26,7 @@ class SyncedFolderRepositoryFactory extends SyncedFolderRepository {
 
   @override
   Future<List<SyncFolder>> get() async {
+    return syncings;
     return _local.get();
   }
 

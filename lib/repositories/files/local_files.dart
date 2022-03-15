@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:drive/models/files_model.dart';
-import 'package:drive/models/main.dart';
 import 'package:drive/models/users_model.dart';
 
 import 'files_repository.dart';
@@ -15,14 +14,7 @@ class LocalFilesRepository extends FilesRepository {
 
   @override
   Future<Folder> fromPath(String path) async {
-    return Folder([
-      File(Metadata("png"), 15, "dsdsd"),
-      File(Metadata("png"), 15, "zdze"),
-      Folder([
-        File(Metadata("png"), Random().nextInt(100), "dsdsd"),
-        File(Metadata("png"), 15, "zdze"),
-      ])
-    ]);
+    throw UnimplementedError();
   }
 
   @override

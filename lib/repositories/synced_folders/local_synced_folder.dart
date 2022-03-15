@@ -1,5 +1,4 @@
 import 'package:drive/models/files_model.dart';
-import 'package:drive/models/main.dart';
 import 'package:drive/models/syncing_model.dart';
 import 'package:drive/repositories/synced_folders/synced_folder_repository.dart';
 
@@ -19,8 +18,6 @@ class LocalSyncedFolderRepository extends SyncedFolderRepository {
   @override
   Future<List<SyncFolder>> get() async {
     // TODO: implement get
-
-    return List.generate(10, (index) => SyncFolder(Folder([]), LocalFolder()));
     throw UnimplementedError();
   }
 

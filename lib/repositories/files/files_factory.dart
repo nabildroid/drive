@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:drive/data/data.dart';
 import 'package:drive/models/files_model.dart';
 import 'package:drive/models/users_model.dart';
 import 'package:drive/repositories/files/files_repository.dart';
@@ -18,8 +21,11 @@ class FilesRepositoyFactory extends FilesRepository {
   }
 
   @override
-  Future<Folder> fromPath(String path) {
-    //todo check for connectivity and the Data Syncing and select repo
+  Future<Folder> fromPath(String path) async {
+    if (path == "/") {
+      return folder[2];
+    }
+    return folder[min(path.length, folder.length - 1)];
     return _local.fromPath(path);
   }
 
